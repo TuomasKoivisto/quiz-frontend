@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css" />
+
+    <title>Quiz</title>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm  navbar-dark bg-info ">
+        <a class="navbar-brand" href="index.html"><img src="img/emoji.png" /></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Home<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="quiz.html">Quiz</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="add.html">Add questions</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="developers.html">Developers</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <main class="container">
+      <h2 class="text-center">Choose Quiz details</h2>
+      <div class="form-container">
+        <form  id="quiz-form">
+          <p>
+            categories
+          </p>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input check" type="checkbox" value="" id="checkAll">
+            <label class="form-check-label" for="defaultCheck1">
+              All
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input check" type="checkbox" value="history" id="defaultCheck1">
+            <label class="form-check-label" for="defaultCheck1">
+              History
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input check" type="checkbox" value="geology" id="defaultCheck1">
+            <label class="form-check-label" for="defaultCheck1">
+              Geology
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input check" type="checkbox" value="biology" id="defaultCheck1">
+            <label class="form-check-label" for="defaultCheck1">
+              Biology
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input check" type="checkbox" value="art" id="defaultCheck1">
+            <label class="form-check-label" for="defaultCheck1">
+              Art
+            </label>
+          </div>
+          <br />
+          <br />
+          <p>
+            Question amount
+          </p>
+          <div class="form-check radio">
+            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+            <label class="form-check-label" for="exampleRadios1">
+              5 questions
+            </label>
+          </div>
+          <div class="form-check radio">
+            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+            <label class="form-check-label" for="exampleRadios2">
+              10 questions
+            </label>
+          </div>
+          <br />
+          <div class="button-div">
+            <button type="submit" class="btn btn-primary btn-lg">Start</button>
+          </div>
+        </form>
+      </div>
+      <div class="text-center">
+        <div id="quiz" class="test">
+
+        </div>
+      </div>
+
+    </main>
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+    var questions = {};
+var questionAmount;
+function getQuestions(callback, category) {
+  $.get(
+    'https://morning-journey-89097.herokuapp.com/questions/' + category,
+    function(data) {
+      questions = data.questions;
+      questionAmount = questions.length;
+      callback(questionAmount);
+    }
+  );
+}
+
+$(document).ready(function() {
+  $('#checkAll').click(function() {
+    $('.check').prop('checked', $(this).prop('checked'));
+  });
+  $('#quiz-form').submit(function(event) {
+    $('#quiz').html('');
+    event.preventDefault();
+    var category = $('input[type="checkbox"]:checked', '#quiz-form').val();
+    getQuestions(createQuiz, category);
+  });
+
+  $('#quiz').on('change', $('input'), function(e) {
+    $('input').click(function() {
+      if ($(this).hasClass('right')) {
+        alert('RIGHT!');
+      } else {
+        alert('WRONG!');
+      }
+    });
+  });
+});
+
+function randomOrder() {
+  var randomOrder = Math.random();
+  randomOrder = Math.round(randomOrder);
+  return randomOrder;
+}
+
+function createQuiz() {
+  for (var i = 0; i <= questionAmount; i++) {
+    var questionDiv = $('<div></div>');
+    var question = $('<strong></strong>');
+    var answerDiv = $('<div></div>');
+    var answer = $('<span></span>');
+    var answerRadio = $('<input type="radio" class="right"/>');
+    var radioName = 'question' + i.toString();
+    answerRadio.attr('name', radioName);
+    var wrongAnswerDiv = $('<div></div>');
+    var wrongAnswer = $('<span></span>');
+    var wrongAnswerRadio = $('<input type="radio" class="wrong"/>');
+    wrongAnswerRadio.attr('name', radioName);
+
+    question.text(questions[i].question);
+    answer.text(questions[i].answer);
+    wrongAnswer.text(questions[i].wrongAnswer);
+
+    answerDiv.append(answer);
+    answerDiv.append(answerRadio);
+
+    wrongAnswerDiv.append(wrongAnswer);
+    wrongAnswerDiv.append(wrongAnswerRadio);
+
+    questionDiv.append(question);
+
+    if (randomOrder() === 1) {
+      questionDiv.append(answerDiv);
+      questionDiv.append(wrongAnswerDiv);
+    } else {
+      questionDiv.append(wrongAnswerDiv);
+      questionDiv.append(answerDiv);
+    }
+
+    $('#quiz').append(questionDiv);
+  }
+}
+</script>
+  </body>
+</html>

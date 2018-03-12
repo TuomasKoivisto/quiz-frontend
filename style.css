@@ -1,0 +1,92 @@
+* {
+  font-size: 14px;
+}
+
+body {
+  padding-bottom: 50px;
+}
+
+.navbar-brand img {
+  width: 60px;
+}
+
+.nav-link {
+  font-size: 1.2em;
+  margin: 0 8px;
+  color: rgb(255, 255, 255);
+}
+
+h1 {
+}
+
+ul {
+  list-style-type: none;
+}
+
+main li {
+  font-size: 1.2em;
+  margin: 5vh 0 0 3vw;
+}
+
+.card {
+  height: 450px;
+}
+
+.card-img-top {
+  max-width: 230px;
+  height: 250px;
+  margin: 0 auto;
+}
+
+h2 {
+  margin-top: 30px;
+}
+
+.form-container {
+  margin: 0 auto;
+  width: 400px;
+  max-width: 100%;
+}
+
+form {
+  margin-top: 30px;
+}
+
+form > p,
+.button-div {
+  text-align: center;
+}
+
+form .radio {
+  text-align: center;
+}
+
+.form-group {
+  margin: 30px 0;
+}
+
+form button {
+  width: 100px;
+}
+
+#quiz {
+  height: 400px;
+  width: 400px;
+  margin: 0 auto;
+}
+
+#quiz > div {
+  margin-top: 100px;
+}
+
+#quiz input {
+  margin-left: 10px;
+}
+
+form > p {
+  background-color: rgb(230, 230, 230);
+}
+
+main.developers > .row {
+  margin-top: 30px;
+}
